@@ -34,7 +34,7 @@ class Calendar extends Component {
         };
     }
     
-    const expandURL = {(events)} => {
+    expandURL = (events) => {
         let base = "https://www.reg.uci.edu/perl/WebSoc?YearTerm=2019-03&ShowFinals=1&ShowComments=1&CourseCodes=";
         for (let event of events){
             if (event.index.includes(this.props.currentScheduleIndex)){
@@ -58,7 +58,7 @@ class Calendar extends Component {
                         <IconButton onClick={() => this.props.onScheduleChange(0)}><ChevronLeft/></IconButton>
                         <IconButton onClick={() => this.props.onScheduleChange(1)}><ChevronRight/></IconButton>
                         <Typography variant='subheading' style={{flexGrow: 1}}>{'Schedule ' + (this.props.currentScheduleIndex + 1)}</Typography>
-                        <a href={this.expandURLS(this.props.classEventsInCalendar)}><OpenInBrowser /></a>
+                        <a href={this.expandURL(this.props.classEventsInCalendar)} target = "_blank"><OpenInBrowser /></a>
                         <Popup onAddCustomEvent={this.props.onAddCustomEvent}/>
                     </Toolbar>
                 </Paper>
