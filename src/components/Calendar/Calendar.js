@@ -4,7 +4,7 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import moment from "moment";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "../../../node_modules/@material-ui/core/IconButton/IconButton";
-import {ChevronLeft, ChevronRight, Add} from "@material-ui/icons";
+import {ChevronLeft, ChevronRight, Add, OpenInBrowser} from "@material-ui/icons";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import Popup from "../CustomEvents/Popup";
@@ -33,6 +33,17 @@ class Calendar extends Component {
             }
         };
     }
+    
+    const expandURL = {(events)} => {
+        let base = "https://www.reg.uci.edu/perl/WebSoc?YearTerm=2019-03&ShowFinals=1&ShowComments=1&CourseCodes=";
+        for (let event of events){
+            if (event.index.includes(this.props.currentScheduleIndex)){
+                base += event.courseID;
+                base += "%2C";
+            }
+        }
+        return base;
+    }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
         return this.props.classEventsInCalendar !== nextProps.classEventsInCalendar
@@ -47,6 +58,7 @@ class Calendar extends Component {
                         <IconButton onClick={() => this.props.onScheduleChange(0)}><ChevronLeft/></IconButton>
                         <IconButton onClick={() => this.props.onScheduleChange(1)}><ChevronRight/></IconButton>
                         <Typography variant='subheading' style={{flexGrow: 1}}>{'Schedule ' + (this.props.currentScheduleIndex + 1)}</Typography>
+                        <a href={this.expandURLS(this.props.classEventsInCalendar)}><OpenInBrowser /></a>
                         <Popup onAddCustomEvent={this.props.onAddCustomEvent}/>
                     </Toolbar>
                 </Paper>
